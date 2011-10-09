@@ -1,0 +1,8 @@
+2) Sana- ja virkelaskuri
+
+Tee ohjelma, joka lukee yhden tekstitiedoston. Käyttäjän pitää voida valita tiedoston syöttötapa. Hän voi joko antaa tiedoston nimen komentoriviparametrina tai ohjelma voi olettaa tiedon tulevan stdin-tiedostosta.
+
+Ohjelman pitää tulostaa tiedostosta löytyneet sanat (vähintään kaksi peräkkäistä kirjainmerkkiä) ja niiden esiintymisten lukumäärät. Kukin sana ja sen esiintymisten lukumäärä tulostetaan omalle rivilleen. Lisäksi tulostetaan kuinka monta virkettä esiintyi tekstissä ja jakauma siitä miten monta sanaa virkkeisiin kuului. Tulostiedoston nimi käsitellään samoin kuin syöttötiedoston.
+
+Käytä ratkaisussasi tietorakenteena trie:tä, hajautustaulua tai tasapainotettua binääripuuta.
+
