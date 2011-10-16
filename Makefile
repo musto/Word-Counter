@@ -1,6 +1,6 @@
 CC= gcc
 LD= gcc
-CFLAGS= -Wall -Werror -pedantic -std=c89 -g -O0 -I sources
+CFLAGS= -Wall -Werror -pedantic -std=c99 -g -O0 -I sources
 
 .PHONY: clean
 
@@ -16,6 +16,9 @@ wordcount: sources/wordcount.o sources/avl_tree.o
 run_test: test
 	valgrind --leak-check=full --show-reachable=yes ./test
 
+run_test2: wordcount
+	cd tests && ./test.sh
+
 clean:
-	$(RM) tests/*.o sources/*.o test
+	$(RM) tests/*.o sources/*.o test tests/testoutput
 

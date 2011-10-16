@@ -53,11 +53,30 @@ void test_inserting_and_finding()
 	avl_tree_destroy(root);
 }
 
+void test_that_keys_are_copied()
+{
+	struct avl_tree_node* root;
+	int* value;
+
+	char key[] = "esa";
+	root = avl_tree_create(key, 3);
+
+	value = avl_tree_find(root, "esa");
+	assertIntEquals(3, *value);
+
+	key[0] = 'a';
+	value = avl_tree_find(root, "esa");
+	assertIntEquals(3, *value);
+
+	avl_tree_destroy(root);
+}
+
 int main(void)
 {
 	test_creation();
 	test_finding();
 	test_inserting_and_finding();
+	test_that_keys_are_copied();
 
 	return 0;
 }
