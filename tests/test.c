@@ -3,20 +3,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void assertMyNull(void* pointer, int line)
+void assertMyNull(void* pointer, int line, const char* file)
 {
 	if(pointer)
 	{
-		printf("Pointer was not null on line %d\n", line);
+		printf("Pointer was not null on %s:%d\n", file, line);
 		exit(-1);
 	}
 }
 
-void assertMyIntEquals(int expected, int value, int line)
+void assertMyIntEquals(int expected, int value, int line, const char* file)
 {
 	if(expected != value)
 	{
-		printf("Expected %d, got %d on line %d\n", expected, value, line);
+		printf("Expected %d, got %d on %s:%d\n", expected, value, file, line);
 		exit(-1);
 	}
 }

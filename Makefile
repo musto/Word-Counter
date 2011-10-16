@@ -1,6 +1,6 @@
 CC= gcc
 LD= gcc
-CFLAGS= -Wall -Werror -pedantic -std=c99 -g -O0 -I sources
+CFLAGS= -Wall -Wextra -pedantic -std=c99 -g -O0 -I sources
 
 .PHONY: clean
 

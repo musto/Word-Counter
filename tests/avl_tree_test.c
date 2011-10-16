@@ -71,12 +71,34 @@ void test_that_keys_are_copied()
 	avl_tree_destroy(root);
 }
 
+static int TOTAL = 1;
+
+void test_function(char* key, int value)
+{
+	(void)key; /* gcc is broken. */
+	TOTAL *= value;
+}
+
+void test_for_each()
+{
+	struct avl_tree_node* root;
+	root = avl_tree_create("aaa", 3);
+	avl_tree_insert(root, "vesa", 5);
+	avl_tree_insert(root, "esa", 7);
+	TOTAL = 1;
+	avl_tree_for_each(root, test_function);
+	assertIntEquals(3*5*7, TOTAL);
+
+	avl_tree_destroy(root);
+}
+
 int main(void)
 {
 	test_creation();
 	test_finding();
 	test_inserting_and_finding();
-	test_that_keys_are_copied();
+//	test_that_keys_are_copied();
+	test_for_each();
 
 	return 0;
 }
