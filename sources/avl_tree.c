@@ -20,7 +20,6 @@ struct avl_tree_node* avl_tree_create(char* key, int value) {
     T->left = NULL;
     T->right = NULL;
     return T;
-
 }
 
 void avl_tree_destroy(struct avl_tree_node* root) {
