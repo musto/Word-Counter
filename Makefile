@@ -14,8 +14,8 @@ wordcount: sources/wordcount.o sources/avl_tree.o
 
 
 run_test: test
-	valgrind --leak-check=full --show-reachable=yes  ./test 
+	valgrind --leak-check=full --show-reachable=yes ./test
 
 clean:
-	$(RM) tests/*.o sources/*.o
+	$(RM) tests/*.o sources/*.o test
 

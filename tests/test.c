@@ -14,7 +14,10 @@ void assertMyNull(void* pointer, int line)
 
 void assertMyIntEquals(int expected, int value, int line)
 {
-	printf("Expected %d, got %d on line %d\n", expected, value, line);
-	exit(-1);
+	if(expected != value)
+	{
+		printf("Expected %d, got %d on line %d\n", expected, value, line);
+		exit(-1);
+	}
 }
 
