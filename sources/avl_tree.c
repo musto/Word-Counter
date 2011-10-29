@@ -3,6 +3,14 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifndef max
+	#define max( a, b ) ( ((a) > (b)) ? (a) : (b) )
+#endif
+
+#ifndef min
+	#define min( a, b ) ( ((a) < (b)) ? (a) : (b) )
+#endif
+
 struct avl_tree_node {
     const char* key;
     int value;
@@ -33,7 +41,7 @@ void avl_tree_destroy(struct avl_tree_node* root) {
     free(root);
 }
 
-static void single_rotate_right(struct avl_tree_node* root) {
+static struct avl_tree_node* single_rotate_right(struct avl_tree_node* root) {
 struct avl_tree_node* node;
 
 node = root->right;
@@ -42,15 +50,16 @@ node->left = root;
 
 root->height = max(root->left->height, root->right->height) +1;
 node->height = max(node->left->height, node->right->height) +1;
+return node;
 }
 
-static void double_rotate_right(struct avl_tree_node* root) {
+static struct avl_tree_node* double_rotate_right(struct avl_tree_node* root) {
 root->right = single_rotate_right(root->right);
 return single_rotate_right(root);
 
 }
 
-static void single_rotate_left(struct avl_tree_node* root) {
+static struct avl_tree_node* single_rotate_left(struct avl_tree_node* root) {
 struct avl_tree_node* node;
 
 node = root->left;
@@ -59,9 +68,10 @@ node->right = root;
 
 root->height = max(root->left->height, root->right->height) +1;
 node->height = max(node->left->height, node->right->height) +1;
+return node;
 }
 
-static void double_rotate_left(struct avl_tree_node* root) {
+static struct avl_tree_node* double_rotate_left(struct avl_tree_node* root) {
 root->left = single_rotate_left(root->left);
 return single_rotate_left(root);
 }
