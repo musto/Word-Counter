@@ -1,5 +1,6 @@
 *.o
-test
+avl_tree_test
+int_counts_test
 wordcount
 tests/testoutput
 
