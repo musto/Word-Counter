@@ -27,10 +27,10 @@ void int_counts_add(struct int_counts* container, int key)
 {
 	container->value++;
 	container->parray[key]++;	
-	if (container->value > container->max)
-		container->max = container->value;
-	if (container->value < container->min)
-		container->min = container->value;
+	if (key > container->max)
+		container->max = key;
+	if (key < container->min)
+		container->min = key;
 
 }
 
