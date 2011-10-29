@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 struct avl_tree_node {
-    char* key;
+    const char* key;
     int value;
 
     int height;
@@ -12,21 +12,24 @@ struct avl_tree_node {
     struct avl_tree_node* right;
 };
 
-struct avl_tree_node* avl_tree_create(char* key, int value) {
-    struct avl_tree_node* T = malloc(sizeof (struct avl_tree_node));
-    T->height = 0;
-    T->key = key;
-    T->value = value;
-    T->left = NULL;
-    T->right = NULL;
-    return T;
+struct avl_tree_node* avl_tree_create() {
+    struct avl_tree_node* root = malloc(sizeof(struct avl_tree_node));
+    root->height = 0;
+    root->key = NULL;
+    root->value = 0;
+    root->left = NULL;
+    root->right = NULL;
+    return root;
 }
 
 void avl_tree_destroy(struct avl_tree_node* root) {
-    if (root->right != NULL)
+    if (root->right != NULL) {
         avl_tree_destroy(root->right);
-    if (root->left != NULL)
+    }
+
+    if (root->left != NULL) {
         avl_tree_destroy(root->left);
+    }
     free(root);
 }
 
@@ -45,48 +48,69 @@ static void single_rotate_left(struct avl_tree_node* root) {
 static void double_rotate_left(struct avl_tree_node* root) {
 }
 
-void avl_tree_insert(struct avl_tree_node* root, char* key, int value) {
+void avl_tree_insert(struct avl_tree_node* root, const char* key, int value) {
+    int comparison;
     assert(root);
-    if (strcmp(key, root->key) < 0) {
+
+    if (!root->key) {
+        assert(root->left == NULL);
+        assert(root->right == NULL);
+
+        root->key = key;
+        root->value = value;
+        return;
+    }
+
+    comparison = strcmp(key, root->key);
+    if (comparison < 0) {
         if (root->left == NULL) {
-            struct avl_tree_node* T = avl_tree_create(key, value);
-            root->left = T;
-            return;
+            root->left = avl_tree_create();
         }
         avl_tree_insert(root->left, key, value);
-    }
-    if (strcmp(key, root->key) > 0) {
+    } else if (comparison > 0) {
         if (root->right == NULL) {
-            struct avl_tree_node* T = avl_tree_create(key, value);
-            root->right = T;
-            return;
+            root->right = avl_tree_create();
         }
         avl_tree_insert(root->right, key, value);
+    } else {
+        root->value = value;;
     }
-    if (strcmp(key, root->key) == 0)
-        root->value++;
 }
 
-int* avl_tree_find(struct avl_tree_node* root, char* key) {
+int* avl_tree_find(struct avl_tree_node* root, const char* key) {
+    int comparison;
     assert(root);
-    if (strcmp(key, root->key) < 0)
-        if (root->left == NULL)
-            return 0;
-        else
+    if (!root->key) {
+        assert(root->left == NULL);
+        assert(root->right == NULL);
+
+        return NULL;
+    }
+    comparison = strcmp(key, root->key);
+    if (comparison < 0) {
+        if (root->left == NULL) {
+            return NULL;
+        } else {
             return avl_tree_find(root->left, key);
-    else
-        if (strcmp(key, root->key) > 0)
-        if (root->right == NULL)
-            return 0;
-        else
+        }
+    } else if (comparison > 0) {
+        if (root->right == NULL) {
+            return NULL;
+        } else {
             return avl_tree_find(root->right, key);
-    else
+        }
+    } else {
         return &root->value;
+    }
 }
 
 
-void avl_tree_for_each(struct avl_tree_node* root, void (*f)(char* key, int value))
+void avl_tree_for_each(struct avl_tree_node* root, void (*f)(const char* key, int value))
 {
-	f(root->key, root->value);
+    f(root->key, root->value);
+}
+
+void avl_tree_increase(struct avl_tree_node* root, const char* key)
+{
 }
 

@@ -4,8 +4,17 @@
 void test_creation()
 {
 	struct avl_tree_node* root;
+	root = avl_tree_create();
+	avl_tree_destroy(root);
+}
 
-	root = avl_tree_create("esa", 0);
+void test_insertion()
+{
+	struct avl_tree_node* root;
+	root = avl_tree_create();
+	avl_tree_insert(root, "esa", 0);
+	avl_tree_insert(root, "vesa", 1);
+	avl_tree_insert(root, "hesa", 2);
 	avl_tree_destroy(root);
 }
 
@@ -14,7 +23,8 @@ void test_finding()
 	struct avl_tree_node* root;
 	int* value;
 
-	root = avl_tree_create("esa", 3);
+	root = avl_tree_create();
+	avl_tree_insert(root, "esa", 3);
 
 	value = avl_tree_find(root, "vesa");
 	assertNull(value);
@@ -30,7 +40,8 @@ void test_inserting_and_finding()
 	struct avl_tree_node* root;
 	int* value;
 
-	root = avl_tree_create("esa", 3);
+	root = avl_tree_create();
+	avl_tree_insert(root, "esa", 3);
 	avl_tree_insert(root, "vesa", 4);
 	avl_tree_insert(root, "vvv", 5);
 	avl_tree_insert(root, "aaa", 7);
@@ -57,9 +68,10 @@ void test_that_keys_are_copied()
 {
 	struct avl_tree_node* root;
 	int* value;
-
 	char key[] = "esa";
-	root = avl_tree_create(key, 3);
+	root = avl_tree_create();
+
+	avl_tree_insert(root, key, 3);
 
 	value = avl_tree_find(root, "esa");
 	assertIntEquals(3, *value);
@@ -73,7 +85,7 @@ void test_that_keys_are_copied()
 
 static int TOTAL = 1;
 
-void test_function(char* key, int value)
+void test_function(const char* key, int value)
 {
 	(void)key; /* gcc is broken. */
 	TOTAL *= value;
@@ -82,7 +94,8 @@ void test_function(char* key, int value)
 void test_for_each()
 {
 	struct avl_tree_node* root;
-	root = avl_tree_create("aaa", 3);
+	root = avl_tree_create();
+	avl_tree_insert(root, "aaa", 3);
 	avl_tree_insert(root, "vesa", 5);
 	avl_tree_insert(root, "esa", 7);
 	TOTAL = 1;
@@ -92,13 +105,35 @@ void test_for_each()
 	avl_tree_destroy(root);
 }
 
+void test_increasing()
+{
+	struct avl_tree_node* root;
+	root = avl_tree_create();
+	avl_tree_increase(root, "moi");
+	avl_tree_increase(root, "hello");
+	avl_tree_increase(root, "abc");
+	avl_tree_increase(root, "hello");
+	avl_tree_increase(root, "hello");
+	avl_tree_increase(root, "eee");
+	avl_tree_increase(root, "moi");
+	assertIntEquals(3, *avl_tree_find(root, "hello"));
+	assertIntEquals(1, *avl_tree_find(root, "abc"));
+	assertIntEquals(2, *avl_tree_find(root, "moi"));
+	assertIntEquals(1, *avl_tree_find(root, "eee"));
+	assertNull(avl_tree_find(root, "dummy"));
+
+	avl_tree_destroy(root);
+}
+
 int main(void)
 {
 	test_creation();
 	test_finding();
 	test_inserting_and_finding();
+
 //	test_that_keys_are_copied();
-	test_for_each();
+//	test_for_each();
+//	test_increasing();
 
 	return 0;
 }
