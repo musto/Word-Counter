@@ -25,11 +25,13 @@ struct int_counts* int_counts_create(void)
 	container->pvalues[i] = 0;
 	}
 	return container;
+/*
+ * parrayn alustus uupuu vielä
+ */
 }
 
 void int_counts_add(struct int_counts* container, int key)
-{
-	container->pvalues[key]++;	
+{	
 	container->parray[key]++;	
 	if (key > container->max)
 		container->max = key;
@@ -55,5 +57,7 @@ int int_counts_max(struct int_counts* container)
 
 void int_counts_destroy(struct int_counts* container)
 {
+	free(container->pvalues);
 	free(container->parray);
+	free(container);
 }
