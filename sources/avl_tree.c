@@ -135,6 +135,10 @@ int* avl_tree_find(struct avl_tree_node* root, const char* key) {
 
 void avl_tree_for_each(struct avl_tree_node* root, void (*f)(const char* key, int value))
 {
+if (root->right != NULL)
+	avl_tree_for_each(root->right, f);
+if (root->left != NULL)
+	avl_tree_for_each(root->left, f);
     f(root->key, root->value);
 }
 
