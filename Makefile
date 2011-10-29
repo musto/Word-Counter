@@ -18,7 +18,7 @@ parser_test: tests/test.o tests/parser_test.o sources/parser.o
 	$(LD) $^ -o $@
 
 
-wordcount: sources/wordcount.o sources/avl_tree.o
+wordcount: sources/wordcount.o sources/avl_tree.o sources/int_counts.o sources/parser.o
 	$(LD) $^ -o $@
 
 
@@ -31,5 +31,5 @@ run_tests2: wordcount
 	cd tests && ./test.sh
 
 clean:
-	$(RM) tests/*.o sources/*.o avl_tree_test int_counts_test parser_test wordcount tests/testoutput
+	$(RM) tests/*.o sources/*.o avl_tree_test int_counts_test parser_test wordcount tests/*.try
 

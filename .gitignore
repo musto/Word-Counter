@@ -3,5 +3,5 @@ avl_tree_test
 int_counts_test
 parser_test
 wordcount
-tests/testoutput
+tests/*.try
 
