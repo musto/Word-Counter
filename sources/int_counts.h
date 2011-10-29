@@ -13,7 +13,8 @@ struct int_counts* int_counts_create(void);
 /*
  * Add function is basically like the increase function in AVL_tree: it increases 
  * the value of a node by one. Parameter key indicates the index of the node, and
- * container the struct. Returns void.
+ * container the struct. Also checks if the value of the node is higher
+ * or lower than current min or max, and updates them if required. Returns void.
  */
 void int_counts_add(struct int_counts* container, int key);
 /*

@@ -22,8 +22,7 @@ void test_min_and_max()
 {
 	struct int_counts* container = int_counts_create();
 
-	assertIntEquals(-1, int_counts_min(container));
-	assertIntEquals(-1, int_counts_max(container));
+	assertHigher(int_counts_min(container), int_counts_max(container));
 
 	int_counts_add(container, 2);
 	assertIntEquals(2, int_counts_min(container));

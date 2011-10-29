@@ -39,3 +39,12 @@ void assertMyStringEquals(const char* expected, const char* value, int line, con
 	}
 }
 
+void assertMyHigher(int first, int second, int line, const char* file)
+{
+	if(second >= first)
+	{
+		printf("Min was less than max %s:%d\n", file, line);
+		exit(-1);
+	}
+}
+
