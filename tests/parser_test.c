@@ -45,7 +45,7 @@ void sentence_tester(int length)
     if(current_sentence >= sentence_count) {
         printf("Error, got sentence length'%d', didn't expect more sentences\n", length);
     } else {
-        assertIntEquals(expected_sentence_lengths[current_word], length);
+        assertIntEquals(expected_sentence_lengths[current_sentence], length);
     }
     ++current_sentence;
 }
@@ -81,7 +81,7 @@ void test_punctuation()
     current_sentence = 0;
     expected_sentence_lengths = sentence_lengths;
 
-    const char* words[] = { "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "aa" "bb", "cc" };
+    const char* words[] = { "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "aa", "bb", "cc" };
     word_count = 13;
     current_word = 0;
     expected_words = words;
