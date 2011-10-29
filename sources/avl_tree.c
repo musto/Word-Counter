@@ -152,6 +152,5 @@ if (!newvalue){
 	return;
 }
 (*newvalue)++;
-root->value = newvalue;
 }
 
