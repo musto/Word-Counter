@@ -131,7 +131,7 @@ int main(void)
 	test_finding();
 	test_inserting_and_finding();
 
-//	test_that_keys_are_copied();
+	test_that_keys_are_copied();
 	test_for_each();
 	test_increasing();
 

@@ -4,15 +4,15 @@
 #include <stdlib.h>
 
 #ifndef max
-	#define max( a, b ) ( ((a) > (b)) ? (a) : (b) )
+    #define max( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #endif
 
 #ifndef min
-	#define min( a, b ) ( ((a) < (b)) ? (a) : (b) )
+    #define min( a, b ) ( ((a) < (b)) ? (a) : (b) )
 #endif
 
 struct avl_tree_node {
-    const char* key;
+    char* key;
     int value;
 
     int height;
@@ -20,8 +20,13 @@ struct avl_tree_node {
     struct avl_tree_node* right;
 };
 
-struct avl_tree_node* avl_tree_create() {
+struct avl_tree_node* avl_tree_create()
+{
     struct avl_tree_node* root = malloc(sizeof(struct avl_tree_node));
+    if(!root) {
+        return NULL;
+    }
+
     root->height = 0;
     root->key = NULL;
     root->value = 0;
@@ -30,7 +35,10 @@ struct avl_tree_node* avl_tree_create() {
     return root;
 }
 
-void avl_tree_destroy(struct avl_tree_node* root) {
+void avl_tree_destroy(struct avl_tree_node* root)
+{
+    assert(root);
+
     if (root->right != NULL) {
         avl_tree_destroy(root->right);
     }
@@ -38,59 +46,68 @@ void avl_tree_destroy(struct avl_tree_node* root) {
     if (root->left != NULL) {
         avl_tree_destroy(root->left);
     }
+
+    if(root->key) {
+        free(root->key);
+    }
     free(root);
 }
 
-static struct avl_tree_node* single_rotate_right(struct avl_tree_node* root) {
-struct avl_tree_node* node;
+static struct avl_tree_node* single_rotate_right(struct avl_tree_node* root)
+{
+    struct avl_tree_node* node;
 
-node = root->right;
-root->right = node->right;
-node->left = root;
+    node = root->right;
+    root->right = node->right;
+    node->left = root;
 
-root->height = max(root->left->height, root->right->height) +1;
-node->height = max(node->left->height, node->right->height) +1;
-return node;
+    root->height = max(root->left->height, root->right->height) +1;
+    node->height = max(node->left->height, node->right->height) +1;
+    return node;
 }
 
-static struct avl_tree_node* double_rotate_right(struct avl_tree_node* root) {
-root->right = single_rotate_right(root->right);
-return single_rotate_right(root);
+static struct avl_tree_node* double_rotate_right(struct avl_tree_node* root)
+{
+    root->right = single_rotate_right(root->right);
+    return single_rotate_right(root);
 
 }
 
-static struct avl_tree_node* single_rotate_left(struct avl_tree_node* root) {
-struct avl_tree_node* node;
+static struct avl_tree_node* single_rotate_left(struct avl_tree_node* root)
+{
+    struct avl_tree_node* node;
 
-node = root->left;
-root->left = node->right;
-node->right = root;
+    node = root->left;
+    root->left = node->right;
+    node->right = root;
 
-root->height = max(root->left->height, root->right->height) +1;
-node->height = max(node->left->height, node->right->height) +1;
-return node;
+    root->height = max(root->left->height, root->right->height) +1;
+    node->height = max(node->left->height, node->right->height) +1;
+    return node;
 }
 
-static struct avl_tree_node* double_rotate_left(struct avl_tree_node* root) {
-root->left = single_rotate_left(root->left);
-return single_rotate_left(root);
+static struct avl_tree_node* double_rotate_left(struct avl_tree_node* root)
+{
+    root->left = single_rotate_left(root->left);
+    return single_rotate_left(root);
 }
 
-void avl_tree_insert(struct avl_tree_node* root, const char* key, int value) {
-    int comparison;
+void avl_tree_insert(struct avl_tree_node* root, const char* key, int value)
+{
     assert(root);
 
     if (!root->key) {
         assert(root->left == NULL);
         assert(root->right == NULL);
 
-        root->key = key;
+        root->key = malloc(strlen(key) + 1);
+        strcpy(root->key, key);
         root->value = value;
-	root->height = 0;
+        root->height = 0;
         return;
     }
 
-    comparison = strcmp(key, root->key);
+    int comparison = strcmp(key, root->key);
     if (comparison < 0) {
         if (root->left == NULL) {
             root->left = avl_tree_create();
@@ -106,16 +123,18 @@ void avl_tree_insert(struct avl_tree_node* root, const char* key, int value) {
     }
 }
 
-int* avl_tree_find(struct avl_tree_node* root, const char* key) {
-    int comparison;
+int* avl_tree_find(struct avl_tree_node* root, const char* key)
+{
     assert(root);
+
     if (!root->key) {
         assert(root->left == NULL);
         assert(root->right == NULL);
 
         return NULL;
     }
-    comparison = strcmp(key, root->key);
+
+    int comparison = strcmp(key, root->key);
     if (comparison < 0) {
         if (root->left == NULL) {
             return NULL;
@@ -134,23 +153,29 @@ int* avl_tree_find(struct avl_tree_node* root, const char* key) {
 }
 
 
-void avl_tree_for_each(struct avl_tree_node* root, void (*f)(const char* key, int value))
+void avl_tree_for_each(struct avl_tree_node* root, void (*function)(const char* key, int value))
 {
-if (root->right != NULL)
-	avl_tree_for_each(root->right, f);
-if (root->left != NULL)
-	avl_tree_for_each(root->left, f);
-    f(root->key, root->value);
+    assert(root);
+
+    if (root->right) {
+        avl_tree_for_each(root->right, function);
+    }
+    if (root->left) {
+        avl_tree_for_each(root->left, function);
+    }
+    function(root->key, root->value);
 }
 
 void avl_tree_increase(struct avl_tree_node* root, const char* key)
 {
-int* newvalue = avl_tree_find(root, key);
+    assert(root);
 
-if (!newvalue){
-	avl_tree_insert(root, key, 1);
-	return;
-}
-(*newvalue)++;
+    int* newvalue = avl_tree_find(root, key);
+
+    if (!newvalue) {
+        avl_tree_insert(root, key, 1);
+    } else {
+        (*newvalue)++;
+    }
 }
 
