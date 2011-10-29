@@ -7,7 +7,7 @@
 struct int_counts
 {
 	int* parray;
-	int value;
+	int* pvalues;
 	int min;
 	int max;
 };
@@ -15,17 +15,21 @@ struct int_counts
 struct int_counts* int_counts_create(void)
 {
 	int* array = malloc(sizeof(int)*100);
+	int* values = malloc(sizeof(int)*100);
 	struct int_counts* container = malloc(sizeof(struct int_counts));
 	container->parray = array;
-	container->value = 0;
+	container->pvalues = values;
 	container->min = 1000;
 	container->max = -1;
+	for (int i = 0; i < 100; i++){
+	container->pvalues[i] = 0;
+	}
 	return container;
 }
 
 void int_counts_add(struct int_counts* container, int key)
 {
-	container->value++;
+	container->pvalues[key]++;	
 	container->parray[key]++;	
 	if (key > container->max)
 		container->max = key;
