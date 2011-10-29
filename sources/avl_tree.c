@@ -86,6 +86,7 @@ void avl_tree_insert(struct avl_tree_node* root, const char* key, int value) {
 
         root->key = key;
         root->value = value;
+	root->height = 0;
         return;
     }
 
@@ -147,7 +148,8 @@ void avl_tree_increase(struct avl_tree_node* root, const char* key)
 int* newvalue = avl_tree_find(root, key);
 
 if (!newvalue){
-avl_tree_insert(root, key, 0);
+	avl_tree_insert(root, key, 1);
+	return;
 }
 (*newvalue)++;
 root->value = newvalue;
