@@ -12,11 +12,29 @@ void assertMyNull(void* pointer, int line, const char* file)
 	}
 }
 
+void assertMyNotNull(void* pointer, int line, const char* file)
+{
+	if(!pointer)
+	{
+		printf("Pointer was null on %s:%d\n", file, line);
+		exit(-1);
+	}
+}
+
 void assertMyIntEquals(int expected, int value, int line, const char* file)
 {
 	if(expected != value)
 	{
 		printf("Expected %d, got %d on %s:%d\n", expected, value, file, line);
+		exit(-1);
+	}
+}
+
+void assertMyStringEquals(const char* expected, const char* value, int line, const char* file)
+{
+	if(strcmp(expected, value) != 0)
+	{
+		printf("Expected \"%s\", got \"%s\" on %s:%d\n", expected, value, file, line);
 		exit(-1);
 	}
 }
