@@ -34,18 +34,36 @@ void avl_tree_destroy(struct avl_tree_node* root) {
 }
 
 static void single_rotate_right(struct avl_tree_node* root) {
+struct avl_tree_node* node;
 
+node = root->right;
+root->right = node->right;
+node->left = root;
+
+root->height = max(root->left->height, root->right->height) +1;
+node->height = max(node->left->height, node->right->height) +1;
 }
 
 static void double_rotate_right(struct avl_tree_node* root) {
-
+root->right = single_rotate_right(root->right);
+return single_rotate_right(root);
 
 }
 
 static void single_rotate_left(struct avl_tree_node* root) {
+struct avl_tree_node* node;
+
+node = root->left;
+root->left = node->right;
+node->right = root;
+
+root->height = max(root->left->height, root->right->height) +1;
+node->height = max(node->left->height, node->right->height) +1;
 }
 
 static void double_rotate_left(struct avl_tree_node* root) {
+root->left = single_rotate_left(root->left);
+return single_rotate_left(root);
 }
 
 void avl_tree_insert(struct avl_tree_node* root, const char* key, int value) {
