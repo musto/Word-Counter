@@ -144,5 +144,12 @@ if (root->left != NULL)
 
 void avl_tree_increase(struct avl_tree_node* root, const char* key)
 {
+int* newvalue = avl_tree_find(root, key);
+
+if (!newvalue){
+avl_tree_insert(root, key, 0);
+}
+(*newvalue)++;
+root->value = newvalue;
 }
 
