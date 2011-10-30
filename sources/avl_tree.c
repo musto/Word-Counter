@@ -157,13 +157,15 @@ void avl_tree_for_each(struct avl_tree_node* root, void (*function)(const char* 
 {
     assert(root);
 
-    if (root->right) {
-        avl_tree_for_each(root->right, function);
-    }
     if (root->left) {
         avl_tree_for_each(root->left, function);
     }
+
     function(root->key, root->value);
+
+    if (root->right) {
+        avl_tree_for_each(root->right, function);
+    }
 }
 
 void avl_tree_increase(struct avl_tree_node* root, const char* key)
