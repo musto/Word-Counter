@@ -22,6 +22,10 @@ wordcount: sources/wordcount.o sources/avl_tree.o sources/int_counts.o sources/p
 	$(LD) $^ -o $@
 
 
+%.o: %.c
+	@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+	@echo "CC $<"
+
 run_tests: unit_tests
 	valgrind --leak-check=full --show-reachable=yes ./avl_tree_test
 	valgrind --leak-check=full --show-reachable=yes ./int_counts_test

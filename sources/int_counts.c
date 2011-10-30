@@ -3,46 +3,47 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 struct int_counts
 {
-	int* parray;
 	int* pvalues;
 	int min;
 	int max;
+	int total;
 };
 
 struct int_counts* int_counts_create(void)
 {
-	int* array = malloc(sizeof(int)*100);
 	int* values = malloc(sizeof(int)*100);
 	struct int_counts* container = malloc(sizeof(struct int_counts));
-	container->parray = array;
+	if(!container) {
+		return NULL;
+	}
 	container->pvalues = values;
-	container->min = 1000;
+	container->min = INT_MAX;
 	container->max = -1;
+	container->total = 0;
 	for (int i = 0; i < 100; i++){
-	container->pvalues[i] = 0;
+		container->pvalues[i] = 0;
 	}
 	return container;
-/*
- * parrayn alustus uupuu vielä
- */
 }
 
 void int_counts_add(struct int_counts* container, int key)
-{	
-	container->parray[key]++;	
+{
+	++container->pvalues[key];
+	++container->total;
+
 	if (key > container->max)
 		container->max = key;
 	if (key < container->min)
 		container->min = key;
-
 }
 
 int int_counts_get(struct int_counts* container, int key)
 {
-	return container->parray[key];
+	return container->pvalues[key];
 }
 
 int int_counts_min(struct int_counts* container)
@@ -58,6 +59,11 @@ int int_counts_max(struct int_counts* container)
 void int_counts_destroy(struct int_counts* container)
 {
 	free(container->pvalues);
-	free(container->parray);
 	free(container);
 }
+
+int int_counts_total(struct int_counts* container)
+{
+	return container->total;
+}
+

@@ -45,7 +45,6 @@ int main(int argc, char* argv[]) {
 
 static struct avl_tree_node* words;
 static struct int_counts* sentence_lengths;
-static int sentence_count = 0;
 static FILE* output;
 
 static void process_word(const char* word)
@@ -62,8 +61,6 @@ static void process_sentence_length(int length)
     printf("Sentence had %d words\n", length);
 #endif
 	int_counts_add(sentence_lengths, length);
-
-	++sentence_count;
 }
 
 static void print_word_and_count(const char* word, int count)
@@ -82,10 +79,10 @@ static void process(FILE* input, FILE* out)
 	avl_tree_for_each(words, print_word_and_count);
 
 	fprintf(output, "\n");
-	fprintf(output, "sentences: %d\n", sentence_count);
+	fprintf(output, "sentences: %d\n", int_counts_total(sentence_lengths));
 	int min = int_counts_min(sentence_lengths);
 	int max = int_counts_max(sentence_lengths);
-	for(int i = min; i < max; ++max) {
+	for(int i = min; i <= max; ++i) {
 		int count = int_counts_get(sentence_lengths, i);
 		fprintf(output, "%d word sentences: %d\n", i, count);
 	}

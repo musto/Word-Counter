@@ -22,6 +22,11 @@ void int_counts_add(struct int_counts* container, int key);
  */
 int int_counts_get(struct int_counts* container, int key);
 /*
+ * Total functions returns the number of times the add function has been
+ * called for the given container.
+ */
+int int_counts_total(struct int_counts* container);
+/*
  * Min function returns the lowest value of all of the nodes.
  */
 int int_counts_min(struct int_counts* container);

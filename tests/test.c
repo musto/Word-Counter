@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void assertMyNull(void* pointer, int line, const char* file)
 {
@@ -43,7 +44,7 @@ void assertMyHigher(int first, int second, int line, const char* file)
 {
 	if(second >= first)
 	{
-		printf("Min was less than max %s:%d\n", file, line);
+		printf("Got %d > %d on %s:%d\n", first, second, file, line);
 		exit(-1);
 	}
 }
