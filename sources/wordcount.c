@@ -76,7 +76,7 @@ static void process_word(const char* word)
 #if 0
 	printf("Read word '%s'\n", word);
 #endif
-	avl_tree_increase(words, word);
+	words = avl_tree_increase(words, word);
 }
 
 /*

@@ -25,9 +25,9 @@ void avl_tree_destroy(struct avl_tree_node* root);
 /*
  * Inserts a new node into the tree. 
  * Parameters are root, key and value. Key and value are assigned to the new node.
- * Returns void.
+ * Returns the new root of the tree.
  */
-void avl_tree_insert(struct avl_tree_node* root, const char* key, int value);
+struct avl_tree_node* avl_tree_insert(struct avl_tree_node* root, const char* key, int value);
 
 /*
  * Searches for a key in the tree.
@@ -46,9 +46,9 @@ void avl_tree_for_each(struct avl_tree_node* root, void (*f)(const char* key, in
 
 /*
  * Increases the value of a node. Parameter key is the nodes key.
- * Returns void.
+ * Returns the new root of the tree.
  */
-void avl_tree_increase(struct avl_tree_node* root, const char* key);
+struct avl_tree_node* avl_tree_increase(struct avl_tree_node* root, const char* key);
 
 #endif
 

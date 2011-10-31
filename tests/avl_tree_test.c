@@ -12,9 +12,9 @@ void test_insertion()
 {
 	struct avl_tree_node* root;
 	root = avl_tree_create();
-	avl_tree_insert(root, "esa", 0);
-	avl_tree_insert(root, "vesa", 1);
-	avl_tree_insert(root, "hesa", 2);
+	root = avl_tree_insert(root, "esa", 0);
+	root = avl_tree_insert(root, "vesa", 1);
+	root = avl_tree_insert(root, "hesa", 2);
 	avl_tree_destroy(root);
 }
 
@@ -24,7 +24,7 @@ void test_finding()
 	int* value;
 
 	root = avl_tree_create();
-	avl_tree_insert(root, "esa", 3);
+	root = avl_tree_insert(root, "esa", 3);
 
 	value = avl_tree_find(root, "vesa");
 	assertNull(value);
@@ -41,10 +41,10 @@ void test_inserting_and_finding()
 	int* value;
 
 	root = avl_tree_create();
-	avl_tree_insert(root, "esa", 3);
-	avl_tree_insert(root, "vesa", 4);
-	avl_tree_insert(root, "vvv", 5);
-	avl_tree_insert(root, "aaa", 7);
+	root = avl_tree_insert(root, "esa", 3);
+	root = avl_tree_insert(root, "vesa", 4);
+	root = avl_tree_insert(root, "vvv", 5);
+	root = avl_tree_insert(root, "aaa", 7);
 
 	value = avl_tree_find(root, "vesa");
 	assertIntEquals(4, *value);
@@ -71,7 +71,7 @@ void test_that_keys_are_copied()
 	char key[] = "esa";
 	root = avl_tree_create();
 
-	avl_tree_insert(root, key, 3);
+	root = avl_tree_insert(root, key, 3);
 
 	value = avl_tree_find(root, "esa");
 	assertIntEquals(3, *value);
@@ -87,7 +87,7 @@ static int TOTAL = 1;
 
 void test_function(const char* key, int value)
 {
-	(void)key; /* gcc is broken. */
+	(void)key;
 	TOTAL *= value;
 }
 
@@ -95,9 +95,9 @@ void test_for_each()
 {
 	struct avl_tree_node* root;
 	root = avl_tree_create();
-	avl_tree_insert(root, "aaa", 3);
-	avl_tree_insert(root, "vesa", 5);
-	avl_tree_insert(root, "esa", 7);
+	root = avl_tree_insert(root, "aaa", 3);
+	root = avl_tree_insert(root, "vesa", 5);
+	root = avl_tree_insert(root, "esa", 7);
 	TOTAL = 1;
 	avl_tree_for_each(root, test_function);
 	assertIntEquals(3*5*7, TOTAL);
@@ -109,13 +109,13 @@ void test_increasing()
 {
 	struct avl_tree_node* root;
 	root = avl_tree_create();
-	avl_tree_increase(root, "moi");
-	avl_tree_increase(root, "hello");
-	avl_tree_increase(root, "abc");
-	avl_tree_increase(root, "hello");
-	avl_tree_increase(root, "hello");
-	avl_tree_increase(root, "eee");
-	avl_tree_increase(root, "moi");
+	root = avl_tree_increase(root, "moi");
+	root = avl_tree_increase(root, "hello");
+	root = avl_tree_increase(root, "abc");
+	root = avl_tree_increase(root, "hello");
+	root = avl_tree_increase(root, "hello");
+	root = avl_tree_increase(root, "eee");
+	root = avl_tree_increase(root, "moi");
 	assertIntEquals(3, *avl_tree_find(root, "hello"));
 	assertIntEquals(1, *avl_tree_find(root, "abc"));
 	assertIntEquals(2, *avl_tree_find(root, "moi"));
