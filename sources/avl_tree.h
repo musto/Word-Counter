@@ -37,6 +37,11 @@ void avl_tree_insert(struct avl_tree_node* root, const char* key, int value);
 int* avl_tree_find(struct avl_tree_node* root, const char* key);
 
 
+/*
+ * Calls a function for each node in the tree. Parameters are root node and the function,
+ * and each nodes key and value are used for the function calls parameters.
+ * Returns null.
+ */
 void avl_tree_for_each(struct avl_tree_node* root, void (*f)(const char* key, int value));
 
 /*

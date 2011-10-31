@@ -35,7 +35,7 @@ int int_counts_min(struct int_counts* container);
  */
 int int_counts_max(struct int_counts* container);
 /*
- * Destroy function frees the memory of the struct.
+ * Destroy function frees the memory of the container.
  */
 void int_counts_destroy(struct int_counts* container);
 
