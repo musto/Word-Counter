@@ -7,9 +7,18 @@ static int is_end_of_sentence(char c)
 	return c == '.' || c == '!' || c == '?';
 }
 
+/*
+ * Returns 1, if the given character is a character in the finnish alphabet
+ * in latin1 encoding, and 0 otherwise.
+ */
+static int is_finnish_character(char c)
+{
+	return c == (char)228 || c == (char)246 || c == (char)196 || c == (char)214;
+}
+
 static int is_letter(char c)
 {
-	return c >= 'a' && c <= 'z';
+	return isalpha(c) || is_finnish_character(c);
 }
 
 static void check_sentence_end(char c, int* word_count, void (*process_sentence)(int length))
