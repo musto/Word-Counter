@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <assert.h>
 
 struct int_counts
 {
@@ -13,9 +14,11 @@ struct int_counts
 	int total;
 };
 
+#define MAX_SIZE 100
+
 struct int_counts* int_counts_create(void)
 {
-	int* values = malloc(sizeof(int)*100);
+	int* values = malloc(sizeof(int) * MAX_SIZE);
 	struct int_counts* container = malloc(sizeof(struct int_counts));
 	if(!container) {
 		return NULL;
@@ -24,7 +27,7 @@ struct int_counts* int_counts_create(void)
 	container->min = INT_MAX;
 	container->max = -1;
 	container->total = 0;
-	for (int i = 0; i < 100; i++){
+	for(int i = 0; i < MAX_SIZE; ++i) {
 		container->pvalues[i] = 0;
 	}
 	return container;
@@ -32,6 +35,8 @@ struct int_counts* int_counts_create(void)
 
 void int_counts_add(struct int_counts* container, int key)
 {
+	assert(key < MAX_SIZE);
+
 	++container->pvalues[key];
 	++container->total;
 
@@ -43,6 +48,8 @@ void int_counts_add(struct int_counts* container, int key)
 
 int int_counts_get(struct int_counts* container, int key)
 {
+	assert(key < MAX_SIZE);
+
 	return container->pvalues[key];
 }
 

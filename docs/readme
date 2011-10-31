@@ -1,31 +1,67 @@
-Word-Counter has four components: data structures avl_tree and int_counts, main file wordcount and parser. Each component 
-is individually commented in the header file to help understanding the program.
+The team:
+---------
+Topi Musto
+Olli Rissanen
+Annika Nykänen
 
-The program is used to read a text file and count each words incidence. The program also counts the amount of sentences 
-and their lengths. If the user runs the program with command line parameters the reading will be done from a file: the 
-user can decide whether or not to have the output in a file or stdout. If no command line parameters are used, the reading 
+The program:
+------------
+
+The program is used to read a text file and count each words incidence. The program also counts the amount of sentences
+and their lengths. If the user runs the program with command line parameters the reading will be done from a file: the
+user can decide whether or not to have the output in a file or stdout. If no command line parameters are used, the reading
 will be done from stdin, and the output will be done using stdout.
-
-Words will be stored in the AVL tree, while sentences will be stored in the int_counts data structure.
 
 The sentences must end in . ? ! to be counted as sentences.
 
 How to use the program:
+-----------------------
 
 First the code has to be compiled. To do this, follow the steps:
 1. Go to the projects folder, ie. ../NetBeansProjects/Word-Counter
 2. Type make
-and the code is compiled. 
+and the code is compiled.
 
 To run the program using stdin:
 1. Make sure the code is compiled.
-2. Type ./wordounct
+2. Type ./wordcount
 3. Type text.
 4. To stop typing, hit ctrl+d.
 
-To run the program using command line parameters:	
+To run the program using command line parameters:
 1. Make sure the code is compiled.
 2. Make sure the file is in the projects folder.
-2. Type ./wordcount filename
-3. If you want the results to be written in a file, write this instead: ./wordcount inputfilename outputfilename
+3. Type ./wordcount filename
+4. If you want the results to be written in a file, write this instead: ./wordcount inputfilename outputfilename
+
+Implementation:
+---------------
+
+The program has four components: avl_tree, int_counts, wordcount and parser. Each component
+is individually commented in the header file to help understanding the program.
+
+The AVL tree is a balanced binary search tree that maps strings to integers. The input words are stored in the AVL tree.
+
+The int counts is a datastructure that maps integers to integers. The sentence lengths are stored in the data structure.
+
+The parser reads text from a file and separates the text into words and sentences.
+
+The wordcount is the main program that reads the command line input and feeds the input text to the parser. The words
+and sentence lenghts that the parser returns are stored to the two data structures.
+
+Testing:
+--------
+
+The testing code can be found in the "tests" subdirectory. The data structures avl_tree and int_counts have been unit
+tested for common user cases. In addition, avl_tree tests itself by checking an invariant function. Parser's functionality
+is also defined and tested by a separate unit test. The unit tests use a simple hand-made testing framework.
+
+The unit tests can be run with
+$ make run_tests
+
+The final program is tested by a bash script that compares the output of the program to the expected output for
+multiple test inputs.
+
+The system tests can be run with
+£ make run_tests2
 
