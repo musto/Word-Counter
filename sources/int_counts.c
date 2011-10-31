@@ -14,7 +14,7 @@ struct int_counts
 	int total;
 };
 
-#define MAX_SIZE 100
+#define MAX_SIZE 200
 
 struct int_counts* int_counts_create(void)
 {
