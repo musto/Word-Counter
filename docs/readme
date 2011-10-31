@@ -1,0 +1,31 @@
+Word-Counter has four components: data structures avl_tree and int_counts, main wordcount and parser. Each component 
+is individually commented in the header file to help understanding the program.
+
+The program is used to read a text file and count each words incidence. The program also counts the amount of sentences 
+and their lengths. If the user runs the program with command line parameters the reading will be done from a file: the 
+user can decide whether or not to have the output in a file or stdout. If no command line parameters are used, the reading 
+will be done from stdin, and the output will be done using stdout.
+
+Words will be stored in the AVL tree, while sentences will be stored in the int_counts list. 
+
+The sentences must end in . ? ! to be counted as sentences.
+
+How to use the program:
+
+First the code has to be compiled. To do this, follow the steps:
+1. Go to the projects folder, ie. ../NetBeansProjects/Word-Counter
+2. Type make
+and the code is compiled. 
+
+To run the program using stdin:
+1. Make sure the code is compiled.
+2. Type ./wordounct
+3. Type text.
+4. To stop typing, hit ctrl+d.
+
+To run the program using command line parameters:	
+1. Make sure the code is compiled.
+2. Make sure the file is in the projects folder.
+2. Type ./wordcount filename
+3. If you want the results to be written in a file, write this instead: ./wordcount inputfilename outputfilename
+
