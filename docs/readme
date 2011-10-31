@@ -1,4 +1,4 @@
-Word-Counter has four components: data structures avl_tree and int_counts, main wordcount and parser. Each component 
+Word-Counter has four components: data structures avl_tree and int_counts, main file wordcount and parser. Each component 
 is individually commented in the header file to help understanding the program.
 
 The program is used to read a text file and count each words incidence. The program also counts the amount of sentences 
@@ -6,7 +6,7 @@ and their lengths. If the user runs the program with command line parameters the
 user can decide whether or not to have the output in a file or stdout. If no command line parameters are used, the reading 
 will be done from stdin, and the output will be done using stdout.
 
-Words will be stored in the AVL tree, while sentences will be stored in the int_counts list. 
+Words will be stored in the AVL tree, while sentences will be stored in the int_counts data structure.
 
 The sentences must end in . ? ! to be counted as sentences.
 

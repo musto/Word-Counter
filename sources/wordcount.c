@@ -4,6 +4,20 @@
 #include "avl_tree.h"
 #include "parser.h"
 #include "int_counts.h"
+/*
+ * Wordcount is the programs main file. It handles the inputs and the outputs, uses the 
+ * data structures and the parser. It has the following functions: main, process_word, 
+ * process_sentence, print_word_and_count and process. 
+ *
+ * First it reads either the file or text from stdin. When the input is read, it checks
+ * whether output should be written in a file or in stdout. The main function then calls 
+ * process function. Process creates AVL tree and int counts datastructures.
+ * Process then calls parser, which reads words and sentences using wordcounts methods 
+ * process_word and process_sentence. After the words are read, printing words is done using 
+ * AVLs for-each function. Then the sentences are printed using int_counts_get function.
+ * 
+ * Both datastructures are deleted after the printing is done.
+ */
 
 static void process_word(const char* word);
 static void process_sentence_length(int length);
