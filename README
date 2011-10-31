@@ -4,3 +4,17 @@ Instructions for the course can be found at:
 http://www.cs.helsinki.fi/node/62063
 http://www.cs.helsinki.fi/node/65829
 
+Compilation:
+
+$ make
+
+Running tests:
+
+$ make run_tests
+$ make run_tests2
+
+Running the main program:
+
+$ ./wordcount inputfile outputfile
+$ ./wordcount < inputfile > outputfile
+

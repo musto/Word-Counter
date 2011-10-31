@@ -8,10 +8,6 @@
     #define max( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #endif
 
-#ifndef min
-    #define min( a, b ) ( ((a) < (b)) ? (a) : (b) )
-#endif
-
 struct avl_tree_node {
     char* key;
     int value;
@@ -24,7 +20,8 @@ struct avl_tree_node {
 static int invariant(struct avl_tree_node* node);
 static int height(struct avl_tree_node* node);
 
-#define AVL_BALANCE 0
+/* When this is defined as 1, the binary search tree is balanced; otherwise it is not balanced. */
+#define AVL_BALANCE 1
 
 #if AVL_BALANCE == 1
 static struct avl_tree_node* single_rotate_right(struct avl_tree_node* root);
@@ -36,6 +33,9 @@ static int balance(struct avl_tree_node* node);
 static struct avl_tree_node* balance_update(struct avl_tree_node* node);
 
 
+/*
+ * Returns 1 if the tree is in valid shape and 0 otherwise.
+ */
 int invariant(struct avl_tree_node* node)
 {
     if(!node) {
@@ -139,46 +139,36 @@ struct avl_tree_node* balance_update(struct avl_tree_node* node)
 #if AVL_BALANCE == 1
 struct avl_tree_node* single_rotate_left(struct avl_tree_node* root)
 {
-    printf("Rotate left at %s\n", root->key);
     struct avl_tree_node* node = root->right;
-    root->right = node->right;
+    root->right = node->left;
     node->left = root;
 
     root->height = max(height(root->left), height(root->right)) + 1;
     node->height = max(height(node->left), height(node->right)) + 1;
-    assert(invariant(node));
     return node;
-}
-
-struct avl_tree_node* rotate_right_left(struct avl_tree_node* root)
-{
-    printf("Rotate right at %s\n", root->key);
-    root->right = single_rotate_right(root->right);
-    struct avl_tree_node* new_root = single_rotate_left(root);
-    assert(invariant(new_root));
-    return new_root;
 }
 
 struct avl_tree_node* single_rotate_right(struct avl_tree_node* root)
 {
-    struct avl_tree_node* node;
-
-    node = root->left;
+    struct avl_tree_node* node = root->left;
     root->left = node->right;
     node->right = root;
 
     root->height = max(height(root->left), height(root->right)) + 1;
     node->height = max(height(node->left), height(node->right)) + 1;
-    assert(invariant(node));
     return node;
+}
+
+struct avl_tree_node* rotate_right_left(struct avl_tree_node* root)
+{
+    root->right = single_rotate_right(root->right);
+    return  single_rotate_left(root);
 }
 
 struct avl_tree_node* rotate_left_right(struct avl_tree_node* root)
 {
     root->left = single_rotate_left(root->left);
-    struct avl_tree_node* new_root = single_rotate_right(root);
-    assert(invariant(new_root));
-    return new_root;
+    return single_rotate_right(root);
 }
 
 int balance(struct avl_tree_node* node)
@@ -259,8 +249,9 @@ void avl_tree_for_each(struct avl_tree_node* root, void (*function)(const char* 
     if (root->left) {
         avl_tree_for_each(root->left, function);
     }
-
-    function(root->key, root->value);
+    if(root->key) {
+        function(root->key, root->value);
+    }
 
     if (root->right) {
         avl_tree_for_each(root->right, function);

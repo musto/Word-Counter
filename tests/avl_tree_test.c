@@ -35,6 +35,19 @@ void test_finding()
 	avl_tree_destroy(root);
 }
 
+void test_inserting()
+{
+	struct avl_tree_node* root;
+
+	root = avl_tree_create();
+	root = avl_tree_insert(root, "esa", 3);
+	root = avl_tree_insert(root, "vesa", 4);
+	root = avl_tree_insert(root, "vvv", 5);
+	root = avl_tree_insert(root, "aaa", 7);
+
+	avl_tree_destroy(root);
+}
+
 void test_inserting_and_finding()
 {
 	struct avl_tree_node* root;
@@ -129,6 +142,7 @@ int main(void)
 {
 	test_creation();
 	test_finding();
+	test_inserting();
 	test_inserting_and_finding();
 
 	test_that_keys_are_copied();

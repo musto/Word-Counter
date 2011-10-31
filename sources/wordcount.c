@@ -124,7 +124,7 @@ static void process(FILE* input, FILE* out)
 	int max = int_counts_max(sentence_lengths);
 	for(int i = min; i <= max; ++i) {
 		int count = int_counts_get(sentence_lengths, i);
-		fprintf(output, "%d word sentences: %d\n", i, count);
+		fprintf(output, "%2d word sentences: %d\n", i, count);
 	}
 
 	int_counts_destroy(sentence_lengths);
