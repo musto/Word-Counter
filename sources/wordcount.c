@@ -23,6 +23,11 @@ static void process_word(const char* word);
 static void process_sentence_length(int length);
 static void process(FILE* input, FILE* output);
 
+/*
+ * Main function checks whether input is taken from stdin or from a file, and whether output is done 
+ * using stdout or file. It then calls process function with the correct input/outputs.
+ */
+
 int main(int argc, char* argv[]) {
     FILE* input;
     if (argc > 1) {
@@ -61,6 +66,11 @@ static struct avl_tree_node* words;
 static struct int_counts* sentence_lengths;
 static FILE* output;
 
+/*
+ * Process_word reads a word passed as a parameter into the AVL tree. If the word
+ * exists, it increases the value by one.
+ */
+
 static void process_word(const char* word)
 {
 #if 0
@@ -69,6 +79,11 @@ static void process_word(const char* word)
 	avl_tree_increase(words, word);
 }
 
+/*
+ * Process_sentence adds a sentence of set length into the int counts data structure. If 
+ * a sentence of the current length is already added, it increases its value by one. 
+ * Parameter is the length of the sentence.
+ */
 static void process_sentence_length(int length)
 {
 #if 0
@@ -76,12 +91,23 @@ static void process_sentence_length(int length)
 #endif
 	int_counts_add(sentence_lengths, length);
 }
-
+/*
+ * Print_word_and_count is used with avl_tree_for_each to print a word.
+ * Parameters are the word and the amount of its appearances in the text.
+ */
 static void print_word_and_count(const char* word, int count)
 {
 	fprintf(output, "%s %d\n", word, count);
 }
 
+/* 
+ * Process function has two parameters: the input and output. They can be done using 
+ * stdin/stdout or files. First process creates AVL tree and int counts datastructures.
+ * Process then calls parser, which reads words and sentences using wordcounts methods 
+ * process_word and process_sentence. After the words are read, printing words is done using 
+ * AVLs for-each function. Then the sentences are printed using int_counts_get function.
+ * Finally the data structures are destroyed.
+ */
 static void process(FILE* input, FILE* out)
 {
 	output = out;
